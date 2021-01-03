@@ -2,25 +2,40 @@ import React, { Component } from 'react'
 import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 
 
-class DishDetailComponent extends Component {
 
-    constructor(props) {
-        super(props)
+const ArrangeComment = ({com}) => {
+    return(
+        <div>
+            <p>{com.comment}</p> 
+            <p> - {com.author} {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(com.date)))}</p>
+        </div>
+    )
 
-    }
+}
+
+const MakeDetailCard = ({dish}) => {
+    return(
+        <div  className="col-5 m-1">
+            <Card>
+                <CardImg top src={dish.image} alt={dish.name} />
+                <CardBody>
+                <CardTitle>{dish.name}</CardTitle>
+                <CardText>{dish.description}</CardText>
+                </CardBody>
+            </Card>
+    </div>
+    )
     
-    render() {
 
-        let comments;
-        if(this.props.dish != undefined)
+}
+
+const DishDetailComponent = ({dish}) =>{
+    let comments;
+        if(dish != undefined)
         {
-            comments = this.props.dish.comments.map( (com) => {
+            comments = dish.comments.map( (com) => {
                 return(
-                    <div>
-                        <p>{com.comment}</p> 
-                        <p> - {com.author} dated {com.date}</p>
-                    </div>
-                   
+                    <ArrangeComment com={com}/>
                 )
             })
 
@@ -30,34 +45,26 @@ class DishDetailComponent extends Component {
     
 
 
-        let returnele = this.props.dish === undefined ? <div></div> : (<div className="container m-5 row">
-                                                                    <div  className="col-5 m-1">
-                                                                    <Card>
-                                                                        <CardImg top src={this.props.dish.image} alt={this.props.dish.name} />
-                                                                        <CardBody>
-                                                                        <CardTitle>{this.props.dish.name}</CardTitle>
-                                                                        <CardText>{this.props.dish.description}</CardText>
-                                                                        </CardBody>
-                                                                    </Card>
-                                                                    </div>
+        let returnele = dish === undefined ? <div></div> : (<div className="container m-5 row">
+                                                                        <MakeDetailCard dish={dish}/>
                                                                     <div  className="col-5 m-1">
                                                                     
                                                                         <h1>Comments</h1>
                                                                         {comments}
-                                                                    
-                                                                    </div>
+                                                                     </div>
                                                                     </div>
                                                                     )
        
 
-        console.log(this.props.dish)
+        //console.log(this.props.dish)
         return(
             
             <div>
             {returnele}
             </div>
         );
-    }
+    
 }
+
 
 export default DishDetailComponent

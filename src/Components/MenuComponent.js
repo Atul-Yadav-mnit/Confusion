@@ -1,34 +1,49 @@
 import React, { Component } from 'react'
-import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
-import DishDetail from './DishDetailComponent.js'
+import { Card, CardImg, CardImgOverlay, CardTitle } from 'reactstrap';
 
 
-class MenuComponent extends Component {
+// Two ways of creating fuctional components  
+// 1) function Menu(props)
+// {
+//     return();
+// }
+// 2) const Menu = () => {
+//     return(
 
-    constructor(props) {
-        super(props)
-    }
+//     );
+// }
 
 
 
-    
-    
-    
-    render() {
 
-        const menu =  this.props.dishes.map( (dish) => {
+function RenderDishItem({dish, onClick}) {
+    return (
+            <div  className="col-5 m-1">
+            <Card key={dish.id} onClick={() => onClick(dish.id)}>
+            <CardImg width="100%" src={dish.image} alt={dish.name} />
+            <CardImgOverlay>
+                <CardTitle>{dish.name}</CardTitle>
+            </CardImgOverlay>
+            </Card>
+            </div>
+    )
+}
+
+
+const MenuComponent = (props) =>{
+
+        const menu =  props.dishes.map( (dish) => {
             return(
-                
-                    <div  className="col-5 m-1">
-                    <Card key={dish.id} onClick={() => this.props.onClick(dish.id)}>
-                    <CardImg width="100%" src={dish.image} alt={dish.name} />
-                    <CardImgOverlay>
-                      <CardTitle>{dish.name}</CardTitle>
-                    </CardImgOverlay>
-                    </Card>
-              
-                </div>
-                
+
+                // XXXXXXXXXXXXXXXX WRONG WAY THIS WAY DIV WILL LOOSE ITS COL-5 ETC NOT WORKING 
+                // <div>
+                //     <RenderDishItem dish ={dish}  onClick={props.onClick}/>
+                // </div>
+
+
+                <RenderDishItem dish ={dish}  onClick={props.onClick}/>
+
+                    
             )
         })
 
@@ -40,7 +55,8 @@ class MenuComponent extends Component {
                 </div>
             </div>
         )
+        
     }
-}
-
+    
+    
 export default MenuComponent
