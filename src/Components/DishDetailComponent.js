@@ -15,7 +15,7 @@ const ArrangeComment = ({com}) => {
 
 const MakeDetailCard = ({dish}) => {
     return(
-        <div  className="col-5 m-1">
+        
             <Card>
                 <CardImg top src={dish.image} alt={dish.name} />
                 <CardBody>
@@ -23,7 +23,7 @@ const MakeDetailCard = ({dish}) => {
                 <CardText>{dish.description}</CardText>
                 </CardBody>
             </Card>
-    </div>
+   
     )
     
 
@@ -45,8 +45,10 @@ const DishDetailComponent = ({dish}) =>{
     
 
 
-        let returnele = dish === undefined ? <div></div> : (<div className="container m-5 row">
+        let returnele = dish === undefined ? <div></div> : (<div   className="container m-5 row">
+                                                            <div key={dish.id} className="col-5 m-1">
                                                                         <MakeDetailCard dish={dish}/>
+                                                                        </div>
                                                                     <div  className="col-5 m-1">
                                                                     
                                                                         <h1>Comments</h1>

@@ -18,14 +18,14 @@ import { Card, CardImg, CardImgOverlay, CardTitle } from 'reactstrap';
 
 function RenderDishItem({dish, onClick}) {
     return (
-            <div  className="col-5 m-1">
-            <Card key={dish.id} onClick={() => onClick(dish.id)}>
+           // <div  key={dish.id} className="col-5 m-1">
+            <Card  onClick={() => onClick(dish.id)}>
             <CardImg width="100%" src={dish.image} alt={dish.name} />
             <CardImgOverlay>
                 <CardTitle>{dish.name}</CardTitle>
             </CardImgOverlay>
             </Card>
-            </div>
+           // </div>
     )
 }
 
@@ -40,9 +40,9 @@ const MenuComponent = (props) =>{
                 //     <RenderDishItem dish ={dish}  onClick={props.onClick}/>
                 // </div>
 
-
+                <div  key={dish.id} className="col-5 m-1">
                 <RenderDishItem dish ={dish}  onClick={props.onClick}/>
-
+                </div>
                     
             )
         })
