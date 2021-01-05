@@ -6,6 +6,11 @@ import Header from './Header.js'
 import Footer from './Footer.js'
 import {Route , Switch , Redirect } from 'react-router-dom'
 import Home from './HomeComponent.js'
+import { COMMENTS } from '../shared/COMMENTS';
+import { LEADERS } from '../shared/LEADERS';
+import { PROMOTIONS } from '../shared/PROMOTIONS';
+import Contact from './ContactUs.js'
+
 
 
 // there are two ways to pass a component in route 
@@ -19,6 +24,9 @@ class MainComponent extends Component {
 
     this.state = {
        dishes : DISHES,
+       comments : COMMENTS,
+       promotions :PROMOTIONS,
+       leaders : LEADERS
     }
   }
 
@@ -29,9 +37,14 @@ class MainComponent extends Component {
   
   render() {
 
+   
     const HomePage = () => {
       return(
-        <Home/>
+          <Home 
+              dish={this.state.dishes.filter((dish) => dish.featured)[0]}
+              promotion={this.state.promotions.filter((promo) => promo.featured)[0]}
+              leader={this.state.leaders.filter((leader) => leader.featured)[0]}
+          />
       );
     }
 
@@ -43,8 +56,9 @@ class MainComponent extends Component {
       <div>
         <Header/>
         <Switch>
-          <Route  path="/Home" component={Home}/>
+          <Route exact path="/Home" component={HomePage}/>
           <Route  exact path="/Menu" component={() => <Menu dishes={this.state.dishes}/>} />
+          <Route  exact path="/contactus" component={Contact} />
           <Redirect to="/Home" />
         </Switch>
         <Footer/>
