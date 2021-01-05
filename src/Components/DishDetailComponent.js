@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, CardTitle ,Breadcrumb,BreadcrumbItem} from 'reactstrap';
+import {Link } from 'react-router-dom'
 
 
 
@@ -29,44 +30,49 @@ const MakeDetailCard = ({dish}) => {
 
 }
 
-const DishDetailComponent = ({dish}) =>{
-    let comments;
-        if(dish != undefined)
-        {
-            comments = dish.comments.map( (com) => {
-                return(
-                    <ArrangeComment com={com}/>
-                )
-            })
+const DishDetailComponent = ({dish, comments}) =>{
 
-        }
-       
+    const dishcomments =  comments.map( (com) => <ArrangeComment com={com}/> )
         
+    const returnele =  <div className="container m-5 row">
+            <div key={dish.id} className="col-5 m-1">
+                <MakeDetailCard dish={dish}/>
+            </div>
+            <div  className="col-5 m-1">
+                <h1>Comments</h1>
+                {dishcomments}
+            </div>
+            </div>
+        
+            
     
-
-
-        let returnele = dish === undefined ? <div></div> : (<div   className="container m-5 row">
-                                                            <div key={dish.id} className="col-5 m-1">
-                                                                        <MakeDetailCard dish={dish}/>
-                                                                        </div>
-                                                                    <div  className="col-5 m-1">
-                                                                    
-                                                                        <h1>Comments</h1>
-                                                                        {comments}
-                                                                     </div>
-                                                                    </div>
-                                                                    )
        
 
-        //console.log(this.props.dish)
+
+      
         return(
-            
-            <div>
-            {returnele}
+            <div className="container">
+                <div className="row mt-2">
+                <Breadcrumb>
+                    <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+                    <BreadcrumbItem active>{dish.name}</BreadcrumbItem>
+                </Breadcrumb>
+
+                <div className="col-12">
+                    <h3>{dish.name}</h3>
+                    <hr />
+                </div>
+                </div>
+                <div className="row">
+                {returnele}
+                </div>
             </div>
+            
         );
     
 }
+        
+
 
 
 export default DishDetailComponent
