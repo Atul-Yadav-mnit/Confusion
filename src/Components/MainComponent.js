@@ -10,6 +10,7 @@ import { COMMENTS } from '../shared/COMMENTS';
 import { LEADERS } from '../shared/LEADERS';
 import { PROMOTIONS } from '../shared/PROMOTIONS';
 import Contact from './ContactUs.js'
+import About from './Aboutus.js'
 
 
 
@@ -48,6 +49,12 @@ class MainComponent extends Component {
       );
     }
 
+
+    const Aboutus = () => {
+      return(
+        <About leaders={this.state.leaders}/>
+      )
+    }
     
 
 
@@ -70,6 +77,7 @@ class MainComponent extends Component {
           <Route exact path="/Menu" component={() => <Menu dishes={this.state.dishes}/>} />
           <Route path='/menu/:dishId' component={DishWithId} />
           <Route  exact path="/contactus" component={Contact} />
+          <Route exact path="/aboutus" component ={Aboutus} />
           <Redirect to="/Home" />
         </Switch>
         <Footer/>
