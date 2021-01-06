@@ -42,7 +42,7 @@ const MenuComponent = (props) => {
             //     <RenderDishItem dish ={dish}  onClick={props.onClick}/>
             // </div>
 
-            <div key={dish.id} className="col-5 m-2">
+            <div key={dish.id} className="col-md-5 m-2 col-sm-12">
                 <RenderDishItem dish={dish} />
             </div>
 
