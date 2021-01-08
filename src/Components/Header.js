@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Jumbotron, Button, Modal, ModalBody, ModalHeader, ModalFooter, Form, Label, FormGroup, Input, FormFeedback } from 'reactstrap';
+import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Jumbotron, Button, Modal, ModalBody, ModalHeader, Form, Label, FormGroup, Input, FormFeedback } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 
 class Header extends Component {
@@ -69,10 +69,10 @@ class Header extends Component {
 
     let un = '';
     let ps = '';
-    if (this.username !== undefined) {
+    if (this.username !== undefined && this.username !== null) {
       un = this.username.value;
     }
-    if (this.password !== undefined) {
+    if (this.password !== undefined && this.password !== null) {
       ps = this.password.value;
     }
     const error = this.validateLogin(un, ps);

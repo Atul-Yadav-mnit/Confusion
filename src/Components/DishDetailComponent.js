@@ -35,10 +35,10 @@ const DishDetailComponent = ({dish, comments}) =>{
     const dishcomments =  comments.map( (com) => <ArrangeComment com={com}/> )
         
     const returnele =  <div className="container m-5 row">
-            <div key={dish.id} className="col-5 m-1">
+            <div key={dish.id} className="col-md-5  col-sm-12 ">
                 <MakeDetailCard dish={dish}/>
             </div>
-            <div  className="col-5 m-1">
+            <div  className="col-md-5  col-sm-12 m-1">
                 <h1>Comments</h1>
                 {dishcomments}
             </div>
