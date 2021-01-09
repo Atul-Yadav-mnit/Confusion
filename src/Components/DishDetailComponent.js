@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Card, CardImg, CardText, CardBody, CardTitle ,Breadcrumb,BreadcrumbItem} from 'reactstrap';
 import {Link } from 'react-router-dom'
+import CommentForm from './CommentFormComponent'
 
 
 
@@ -30,7 +31,7 @@ const MakeDetailCard = ({dish}) => {
 
 }
 
-const DishDetailComponent = ({dish, comments}) =>{
+ const DishDetailComponent = ({dish, comments, add_comment}) =>{
 
     const dishcomments =  comments.map( (com) => <ArrangeComment com={com}/> )
         
@@ -41,6 +42,7 @@ const DishDetailComponent = ({dish, comments}) =>{
             <div  className="col-md-5  col-sm-12 m-1">
                 <h1>Comments</h1>
                 {dishcomments}
+                <CommentForm add_comment = {add_comment} dishId={dish.id}></CommentForm>
             </div>
             </div>
         

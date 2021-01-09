@@ -8,6 +8,7 @@ import {Route , Switch , Redirect, withRouter} from 'react-router-dom'
 import Contact from './ContactUs.js'
 import About from './Aboutus.js'
 import {connect} from 'react-redux'
+import { Add_Comment } from '../redux/ActionCreator.js'
 
 const mapStateToProps = state =>{
   return{
@@ -17,6 +18,10 @@ const mapStateToProps = state =>{
       leaders :state.leaders
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  add_comment: (dishId, rating, author, comment) => dispatch(Add_Comment(dishId, rating, author, comment))
+})
 
 // there are two ways to pass a component in route 
 // one by arrow function (or even normalfunction see commented const Homepage) if want to pass a key // arrowfunction also two ways one like in homepage and one like in menu
@@ -60,7 +65,8 @@ class MainComponent extends Component {
     const DishWithId = ({match}) => {
       return(
           <DishDetail dish={this.props.dishes.filter((dish) => dish.id === parseInt(match.params.dishId,10))[0]} 
-            comments={this.props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))} />
+            comments={this.props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))} 
+            add_comment= {this.props.add_comment} />
       );
     };
 
@@ -85,5 +91,5 @@ class MainComponent extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(MainComponent));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MainComponent));
 
