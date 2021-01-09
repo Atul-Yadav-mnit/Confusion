@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, CardImg, CardText, CardBody, CardTitle ,Breadcrumb,BreadcrumbItem} from 'reactstrap';
 import {Link } from 'react-router-dom'
 import CommentForm from './CommentFormComponent'
-
+import { Loading } from './LoadingComponent';
 
 
 const ArrangeComment = ({com}) => {
@@ -17,7 +17,7 @@ const ArrangeComment = ({com}) => {
 
 const MakeDetailCard = ({dish}) => {
     return(
-        
+        <div key={dish.id} className="col-md-5  col-sm-12 ">
             <Card>
                 <CardImg top src={dish.image} alt={dish.name} />
                 <CardBody>
@@ -25,34 +25,60 @@ const MakeDetailCard = ({dish}) => {
                 <CardText>{dish.description}</CardText>
                 </CardBody>
             </Card>
+            </div>
    
     )
     
 
 }
 
- const DishDetailComponent = ({dish, comments, add_comment}) =>{
+ const DishDetailComponent = ({dish, comments, add_comment, isLoading, errmsg}) =>{
 
-    const dishcomments =  comments.map( (com) => <ArrangeComment com={com}/> )
+    var dishcomments = null;
+    var returnele = null;
+
+    if(dish!=null)
+    {
+    dishcomments =  comments.map( (com) => <ArrangeComment com={com}/> )
         
-    const returnele =  <div className="container m-5 row">
-            <div key={dish.id} className="col-md-5  col-sm-12 ">
-                <MakeDetailCard dish={dish}/>
-            </div>
+    returnele = <div className="container m-5 row">
+                <MakeDetailCard dish={dish} isLoading={isLoading} errmsg={errmsg}/>
             <div  className="col-md-5  col-sm-12 m-1">
                 <h1>Comments</h1>
                 {dishcomments}
                 <CommentForm add_comment = {add_comment} dishId={dish.id}></CommentForm>
             </div>
             </div>
+    }
         
             
     
        
-
+        
+                    
+                if (isLoading) {
+                    return(
+                        <div className="container">
+                            <div className="row">            
+                                <Loading />
+                            </div>
+                        </div>
+                    );
+                }
+                else if (errmsg) {
+                    return(
+                        <div className="container">
+                            <div className="row">            
+                                <h4>{errmsg}</h4>
+                            </div>
+                        </div>
+                    );
+                }
+                else if (dish != null) {
 
       
         return(
+            
             <div className="container">
                 <div className="row mt-2">
                 <Breadcrumb>
@@ -71,6 +97,7 @@ const MakeDetailCard = ({dish}) => {
             </div>
             
         );
+                }
     
 }
         
