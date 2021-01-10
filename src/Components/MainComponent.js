@@ -9,6 +9,7 @@ import Contact from './ContactUs.js'
 import About from './Aboutus.js'
 import {connect} from 'react-redux'
 import { Add_Comment , fetchDishes} from '../redux/ActionCreator.js'
+import {actions} from 'react-redux-form'
 
 const mapStateToProps = state =>{
   return{
@@ -21,8 +22,12 @@ const mapStateToProps = state =>{
 
 const mapDispatchToProps = dispatch => ({
   add_comment: (dishId, rating, author, comment) => dispatch(Add_Comment(dishId, rating, author, comment)),
-  fetchDishes : () => dispatch(fetchDishes())
+  fetchDishes : () => dispatch(fetchDishes()),
+  resetFeedback :() => dispatch(actions.reset('feedback'))
 })
+
+
+//'feedback' is name of the form
 
 // there are two ways to pass a component in route 
 // one by arrow function (or even normalfunction see commented const Homepage) if want to pass a key // arrowfunction also two ways one like in homepage and one like in menu
@@ -91,7 +96,7 @@ class MainComponent extends Component {
           <Route  path="/Home" component={HomePage}/>
           <Route exact path="/Menu" component={() => <Menu dishes={this.props.dishes}/>} />
           <Route path='/menu/:dishId' component={DishWithId} />
-          <Route  exact path="/contactus" component={Contact} />
+          <Route  exact path="/contactus" component={() => <Contact resetFeedback ={this.props.resetFeedback }/>} />
           <Route exact path="/aboutus" component ={Aboutus} />
           <Redirect to="/Home" />
         </Switch>
