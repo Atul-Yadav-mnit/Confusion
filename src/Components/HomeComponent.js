@@ -12,7 +12,7 @@ function RenderCard({item,isLoading, ErrMess}) {
     }
     else if (ErrMess) {
         return(
-                <h4>{ErrMess}</h4>
+                <h4 className ="text-danger">{ErrMess}</h4>
         );
     }
     else {
