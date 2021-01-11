@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Card, CardImg, CardImgOverlay, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom'
 import { Loading } from './LoadingComponent';
+import {baseURL} from '../shared/baseURL'
 
 
 // Two ways of creating fuctional components  
@@ -22,7 +23,7 @@ function RenderDishItem({ dish }) {
     return (
         <Link to={`/menu/${dish.id}`} >
             <Card >
-                <CardImg width="100%" src={dish.image} alt={dish.name} />
+                <CardImg width="100%" src={baseURL + dish.image} alt={dish.name} />
                 <CardImgOverlay>
                     <CardTitle>{dish.name}</CardTitle>
                 </CardImgOverlay>

@@ -20,7 +20,6 @@ export const configureStore = () =>{
         ...createForms({
             feedback : InitialFeedbak
         })
-
     }), applyMiddleware(thunk, logger)
     );
 
