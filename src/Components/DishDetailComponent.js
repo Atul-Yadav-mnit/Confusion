@@ -40,6 +40,7 @@ const MakeDetailCard = ({dish}) => {
     var dishcomments = null;
     var dishcard = null;
     var Initial = null;
+    var button = null;
 
 
     if (isdishLoading) {
@@ -89,19 +90,20 @@ const MakeDetailCard = ({dish}) => {
     }
     else if (commenterrmsg) {
        
-        dishcomments =   <div>
+        dishcomments =   
             <div className="container">
                 <div className="row">            
                     <h4>{commenterrmsg}</h4>
                 </div>
             </div>
-             <CommentForm add_comment = {add_comment} dishId={dish.id}></CommentForm>
-        </div>
+           
+        
         
     }
     else if(comments!=null)
     {
         dishcomments =  comments.map( (com) => <ArrangeComment com={com}/>) 
+        button =  <CommentForm add_comment = {add_comment} dishId={dish.id}></CommentForm>
     }
  
 
@@ -157,7 +159,7 @@ const MakeDetailCard = ({dish}) => {
                 <div  className="col-md-5  col-sm-12 m-1">
                     <h1>Comments</h1>
                     {dishcomments}
-                   
+                    {button}
                 </div>
                 </div>
                 </div>

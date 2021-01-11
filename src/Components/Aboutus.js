@@ -1,26 +1,41 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { baseURL } from '../shared/baseURL'
+import { Loading } from './LoadingComponent';
 
 function Aboutus(props) {
 
-    const leaders = props.leaders.map((leader) => {
-        return (
-            // <p>Leader {leader.name}</p>
-            <Media tag="li" className="mb-2 col-12">
-                  <Media left middle>
-                      <Media object src={leader.image} alt={leader.name} />
-                  </Media>
-                  <Media body className="ml-5">
-                    <Media heading>{leader.name}</Media>
-                    <p>{leader.designation}</p>
-                    <p>{leader.description}</p>
-                  </Media>
-            </Media>
-        );
-    });
+    var leaders = null
+    if (props.isLoading) {
 
-    return(
+        leaders = <Loading />
+
+    }
+    else if (props.ErrMess) {
+
+        leaders = <h4 className="text-danger">{props.ErrMess}</h4>
+
+    }
+    else {
+        leaders = props.leaders.map((leader) => {
+            return (
+                <Media tag="li" className="mb-2 col-12">
+                    <Media left middle>
+                        <Media object src={baseURL + leader.image} alt={leader.name} />
+                    </Media>
+                    <Media body className="ml-5">
+                        <Media heading>{leader.name}</Media>
+                        <p>{leader.designation}</p>
+                        <p>{leader.description}</p>
+                    </Media>
+                </Media>
+            );
+        });
+
+    }
+
+    return (
         <div className="container col-md-12">
             <div className="row mt-2">
                 <Breadcrumb>
@@ -30,7 +45,7 @@ function Aboutus(props) {
                 <div className="col-12">
                     <h3>About Us</h3>
                     <hr />
-                </div>                
+                </div>
             </div>
             <div className="row row-content">
                 <div className="col-sm-12 col-md-6">

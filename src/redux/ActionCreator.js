@@ -2,37 +2,49 @@ import * as ActionTypes from './ActionTypes'
 import fetch from 'cross-fetch'
 import { baseURL } from '../shared/baseURL'
 
-export const Add_Comment = (dishId, rating, comment, author) => ({
+export const Add_Comment = (comment) => ({
     type : ActionTypes.Add_Comment,
-    payload : {
-        dishId : dishId,
-        rating : rating, 
-        comment : comment,
-        author : author
-    } 
+    payload : comment
 })
 
 
+export const Post_Comments = (dishId, rating, author, comment) => (dispatch) => {
+
+    const newComment = {
+        dishId: dishId,
+        rating: rating,
+        author: author,
+        comment: comment
+    };
+    newComment.date = new Date().toISOString();
+
+    return fetch(baseURL + 'comments', {
+        method: "POST",
+        body: JSON.stringify(newComment),
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            throw error;
+      })
+    .then(response => response.json())
+    .then(response => dispatch(Add_Comment(response)))
+    .catch(error =>  { console.log('post comments', error.message); alert('Your comment could not be posted\nError: '+error.message); });
+};
+
 export const fetchDishes = () => (dispatch) => {
     dispatch(DishesLoading());
-
-    // return fetch(baseURL + 'dishes')
-    // .then(response => {
-    //     if (response.ok) {
-    //       return response;
-    //     } else {
-    //       var error = new Error('Error ' + response.status + ': ' + response.statusText);
-    //       error.response = response;
-    //       throw error;
-    //     }
-    //   },
-    //   error => {
-    //         var errmess = new Error(error.message);
-    //         throw errmess;
-    //   })
-    // .then(response => response.json())
-    // .then(dishes => dispatch(AddDishes(dishes)))
-    // .catch(error => dispatch(DishesFailed(error.message)));
 
     return fetch(baseURL+'dishes')
     .then(response => {
@@ -150,3 +162,81 @@ export const CommentsFailed = (errmsg) => ({
     type : ActionTypes.COMMENTS_FAILED,
     payload : errmsg
 })
+
+
+export const FetchLeaders= () => (dispatch) =>{
+    dispatch(LeadersLoading());
+
+    return fetch(baseURL +'leaders')
+            .then(response => {
+                if(response.ok){
+                    return response;
+                }
+                else{
+                    var error = new Error('Error' + response.status + " : "+response.statusText)
+                    error.resonse = response
+                    throw error
+                }
+            }, error => {
+                var error = new Error(error.message);
+                throw error;}
+            ) .then(response => response.json())
+            .then(leaders => dispatch(AddLeaders(leaders)))
+            .catch( error => dispatch(LeadersFailed(error.message)));
+
+}
+
+export const AddLeaders = (leaders) => ({
+    type: ActionTypes.ADD_LEADERS,
+    payload : leaders
+
+})
+
+export const LeadersLoading = () => ({
+    type : ActionTypes.LEADERS_LOADING
+})
+
+export const LeadersFailed = (errmsg) => ({
+    type: ActionTypes.LEADERS_FAILED,
+    payload :errmsg
+})
+
+export const Post_Feedback = (firstname, lastname,telnum, email,agree,contactType,message) => () => {
+
+    const newFeedback = {
+        "firstname": firstname,
+        "lastname": lastname,
+        "telnum": telnum,
+        "email": email,
+        "agree": agree,
+        "contactType": contactType,
+        "message": message,
+    }
+    newFeedback.date = new Date().toISOString();
+    
+    return fetch(baseURL+'feedback', {
+        method : "POST",
+        body : JSON.stringify(newFeedback),
+        headers:{
+            "Content-Type": "application/json"
+        },
+        credentials : "same-origin"
+    })
+    .then( response => {
+        if(response.ok)
+        {
+            return response;
+        }
+        else{
+            var error = new Error('Error' + response.status + " : "+response.statusText);
+            error.resonse = response;
+            throw error;
+        }
+    }, error => {
+        throw error
+    }).then(response => response.json())
+    .catch(error => alert("Your feedback was not submitted due to "+error))
+    .then (response => alert("Thank you for the feedback , we got "+JSON.stringify(response)))
+    .catch(error => alert("Response submitted but not able to show reponse duer to"+error))
+    
+}
